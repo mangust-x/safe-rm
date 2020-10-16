@@ -1,0 +1,31 @@
+#!/bin/bash
+if [ -e $1 ]
+then
+    echo "Вы действительно хотите удалить файл $1 y/n"
+    read ack
+    if [ $ack == y ]
+    then
+        tar -cf $1.tar $1
+        rm -R $1
+        if [ -e ~/RECYCLE ]
+        then
+            mv $1.tar ~/RECYCLE
+            echo "Файл $1 успешно помещен в корзину"
+            find ~/RECYCLE -mtime +7 -delete
+        else
+            mkdir ~/RECYCLE
+            mv $1.tar ~/RECYCLE
+            echo "Корзина создана"
+            echo "Файл $1 успешно помещен в корзину"
+            find ~/RECYCLE -mtime +7 -delete
+        fi
+    elif [ $ack == n ]
+    then
+        exit
+    else
+        echo "Ошибка подтверждения, попробуйте снова"
+        exit
+    fi
+else
+    echo "Файла с названием $1 не существует"
+fi
