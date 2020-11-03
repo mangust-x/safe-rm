@@ -29,3 +29,5 @@ then
 else
     echo "Файла с названием $1 не существует"
 fi
+
+print ("Wooohooo")
